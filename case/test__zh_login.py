@@ -58,17 +58,18 @@ class TestZhLogin(unittest.TestCase):
 
         # 关闭当前窗口
         self.driver.close()
+        sleep(2)
 
         # 切换至原来窗口
         f = self.driver.window_handles
 
         self.driver.switch_to.window(f[0])
-        sleep(2)
+        sleep(5)
 
         # 点击导航登录按钮
         self.driver.find_element_by_xpath('//*[@id="v2-head"]/div/div[1]/div[4]/a[1]').click()
 
-        sleep(1)
+        sleep(3)
 
     # facebook登录
     def test_zh_facebook(self):
@@ -78,6 +79,7 @@ class TestZhLogin(unittest.TestCase):
         # 新打开一个窗口（弹窗）,切换至第2个窗口
         f = self.driver.window_handles
         self.driver.switch_to.window(f[1])
+        sleep(2)
 
         # 填写fecebool账号
         self.driver.find_element_by_xpath('//*[@id="email"]').send_keys('2505312014@qq.com')
@@ -87,7 +89,7 @@ class TestZhLogin(unittest.TestCase):
         # 点击登录按钮
         self.driver.find_element_by_xpath('//*[@id="loginbutton"]').click()
 
-        sleep(2)
+        sleep(3)
 
         # facebook登录窗口自行关闭，切换至原来窗口（登录首页）
         f = self.driver.window_handles
@@ -100,16 +102,16 @@ class TestZhLogin(unittest.TestCase):
 
         # 多刷新几次页面，繁体有第4次PV弹优惠券
         self.driver.refresh()
-        sleep(1)
+        sleep(3)
 
         self.driver.refresh()
-        sleep(1)
+        sleep(3)
 
         self.driver.refresh()
-        sleep(1)
+        sleep(3)
 
         self.driver.refresh()
-        sleep(1)
+        sleep(3)
 
         # 定位用户头像（邮箱登录头像和其他登录方式xpath略有不同）
         user_img = self.driver.find_element_by_xpath(
