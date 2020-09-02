@@ -42,17 +42,16 @@ class TestZhLogin(unittest.TestCase):
         self.driver.switch_to.window(f[1])
         sleep(2)
 
-        i = 0
-
-        for i in range(1):
-            self.driver.find_element_by_xpath('/html/body/div/table/tbody/tr/td[1]/table/tbody/tr[3]/td[2]/a').click()
-            i = i + 1
-            sleep(3)
-            
-
         # 变成美国ip
         self.driver.find_element_by_xpath('//*[@id="TestCompare"]/tbody/tr[3]/td[2]/a').click()
         sleep(2)
+
+        i = 0
+        for i in range(1):
+            self.driver.find_element_by_xpath('/html/body/div/table/tbody/tr/td[1]/table/tbody/tr[3]/td[2]/a').click()
+
+            sleep(3)
+            i = i + 1
 
         # 关闭当前窗口
         self.driver.close()
@@ -73,56 +72,55 @@ class TestZhLogin(unittest.TestCase):
 
     # facebook登录
     def test_zh_facebook(self):
-
         # 点击facebook登录
         self.driver.find_element_by_xpath('//*[@id="base-public-login"]/div[2]/div/div/div/div[1]/div/a[1]').click()
-        
+
         # 新打开一个窗口（弹窗）,切换至第2个窗口
         f = self.driver.window_handles
         self.driver.switch_to.window(f[1])
-        
+
         # 填写fecebool账号
         self.driver.find_element_by_xpath('//*[@id="email"]').send_keys('2505312014@qq.com')
         # 输入facebook密码
         self.driver.find_element_by_xpath('//*[@id="pass"]').send_keys('pngtree2019')
-        
+
         # 点击登录按钮
         self.driver.find_element_by_xpath('//*[@id="loginbutton"]').click()
-        
+
         sleep(2)
-        
+
         # facebook登录窗口自行关闭，切换至原来窗口（登录首页）
         f = self.driver.window_handles
-        
+
         self.driver.switch_to.window(f[0])
-        
+
         print('繁体facebook登录成功')
-        
+
         sleep(3)
-        
+
         # 多刷新几次页面，繁体有第4次PV弹优惠券
         self.driver.refresh()
         sleep(1)
-        
+
         self.driver.refresh()
         sleep(1)
-        
+
         self.driver.refresh()
         sleep(1)
-        
+
         self.driver.refresh()
         sleep(1)
-        
+
         # 定位用户头像（邮箱登录头像和其他登录方式xpath略有不同）
         user_img = self.driver.find_element_by_xpath(
             '//*[@id="v2-head"]/div/div[1]/div[5]/a[1]/div/img')
-        
+
         # 创建鼠标对象
         action = ActionChains(self.driver)
-        
+
         action.move_to_element(user_img).perform()
         sleep(3)
-        
+
         # 点击退出账号
         self.driver.find_element_by_xpath(
             '//*[@id="v2-head"]/div/div[1]/div[5]/div/div[4]/a[5]/i').click()
