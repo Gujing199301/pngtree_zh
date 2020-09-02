@@ -35,7 +35,7 @@ class TestZhLogin(unittest.TestCase):
 
         self.driver.execute_script(js)
 
-        sleep(1)
+        sleep(2)
 
         # 切换至新窗口
         f = self.driver.window_handles
