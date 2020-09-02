@@ -15,8 +15,13 @@ class TestZhLogin(unittest.TestCase):
 
     # 初始化操作
     def setUp(self):
+        driver_options = webdriver.ChromeOptions()
+        driver_options.add_argument("--proxy-server=http:62.72.54.201")
+
         # 创建浏览器对象
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(chrome_options=driver_options)
+
+        self.driver.implicitly_wait(10)
 
         # 英语测试权限
         url = "https://zh.pngtree.com/"
@@ -42,9 +47,9 @@ class TestZhLogin(unittest.TestCase):
         self.driver.switch_to.window(f[1])
         sleep(2)
 
-        # 变成美国ip
-        self.driver.find_element_by_xpath('//*[@id="TestCompare"]/tbody/tr[3]/td[2]/a').click()
-        sleep(2)
+        # # 变成美国ip
+        # self.driver.find_element_by_xpath('//*[@id="TestCompare"]/tbody/tr[3]/td[2]/a').click()
+        # sleep(2)
 
         i = 0
         for i in range(1):
