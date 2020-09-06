@@ -15,7 +15,11 @@ class TestZhLogin(unittest.TestCase):
 
     # 初始化操作
     def setUp(self):
-        # 创建浏览器对象
+        # 创建浏览器对象C:\Users\Administrator\AppData\Local\Programs\Python\Python38-32\chromedriver.exe
+        option = webdriver.ChromeOptions()
+
+        option.binary_location = r'C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chrome.exe'
+
         self.driver = webdriver.Chrome()
 
         # 英语测试权限
