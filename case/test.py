@@ -70,6 +70,7 @@ class TestZhLogin(unittest.TestCase):
 
     # facebook登录
     def test_zh_facebook(self):
+        sleep(5)
 
         # 点击facebook登录
         self.driver.find_element_by_xpath('//*[@id="base-public-login"]/div[2]/div/div/div/div[1]/div/a[1]').click()
