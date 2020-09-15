@@ -6,39 +6,20 @@ from selenium import webdriver
 import pytest
 import unittest
 from selenium.webdriver.common.action_chains import ActionChains
-# noinspection PyUnresolvedReferences
-import allure
 
 
 class TestZhLogin(unittest.TestCase):
 
     # 初始化操作
     def setUp(self):
-        # # 静态IP：102.23.1.105：2005
-        # # 阿布云动态IP：http://D37EPSERV96VT4W2:CERU56DAEB345HU90@proxy.abuyun.com:9020
-        # PROXY = "proxy_host:proxy:port"
-        # options = webdriver.ChromeOptions()
-        # desired_capabilities = options.to_capabilities()
-        # desired_capabilities['proxy'] = {
-        #     "httpProxy": PROXY,
-        #     "ftpProxy": PROXY,
-        #     "sslProxy": PROXY,
-        #     "noProxy": None,
-        #     "proxyType": "MANUAL",
-        #     "class": "org.openqa.selenium.Proxy",
-        #     "autodetect": False
-        # }
-        # self.driver = webdriver.Chrome(desired_capabilities=desired_capabilities)
 
         # 创建浏览器对象
         self.driver = webdriver.Chrome()
 
-        self.driver.implicitly_wait(10)
-
-        # 繁体首页
+        # 英语测试权限
         url = "https://zh.pngtree.com/"
 
-        # 谷歌浏览器打开繁体首页
+        # 谷歌浏览器打开测试权限
         self.driver.get(url)
 
         # 浏览器窗口最大化
@@ -47,29 +28,25 @@ class TestZhLogin(unittest.TestCase):
         # 无论第一打开页面有没有pv验证都刷新一次页面
         self.driver.refresh()
 
-        # 新窗口打开测试权限
+        # 新窗口打开测试权限，连续刷5次刷新pv
         js = 'window.open("https://pngtree.com/test?pass=zxcvb")'
 
         self.driver.execute_script(js)
 
-        sleep(2)
+        sleep(1)
 
         # 切换至新窗口
         f = self.driver.window_handles
         self.driver.switch_to.window(f[1])
         sleep(2)
 
-        # 变成美国ip
-        self.driver.find_element_by_xpath('//*[@id="TestCompare"]/tbody/tr[3]/td[2]/a').click()
-        sleep(3)
-
         i = 0
+
         for i in range(1):
             self.driver.find_element_by_xpath('/html/body/div/table/tbody/tr/td[1]/table/tbody/tr[3]/td[2]/a').click()
 
             sleep(3)
             i = i + 1
-        sleep(1)
 
         # 关闭当前窗口
         self.driver.close()
@@ -79,6 +56,12 @@ class TestZhLogin(unittest.TestCase):
 
         self.driver.switch_to.window(f[0])
         sleep(2)
+
+        # 设置隐式等待时间
+        self.driver.implicitly_wait(10)
+
+
+        sleep(1)
 
         # 点击导航登录按钮
         self.driver.find_element_by_xpath('//*[@id="v2-head"]/div/div[1]/div[4]/a[1]').click()
@@ -141,7 +124,32 @@ class TestZhLogin(unittest.TestCase):
         self.driver.find_element_by_xpath(
             '//*[@id="v2-head"]/div/div[1]/div[5]/div/div[4]/a[5]/i').click()
 
+
     def tearDown(self):
+
+        sleep(1)
+
+        # 刷新页面确认退出
+        self.driver.refresh()
+        sleep(2)
+
+        try:
+            # 定位注册弹窗中的文案
+            login = self.driver.find_element_by_xpath('//*[@id="base-register-window"]/div[2]/div[1]/div/div[2]/div[1]/p[1]')
+            self.driver.refresh()
+            print('触发3次PV，已刷新')
+            sleep(2)
+
+        except ArithmeticError:
+            # 如有异常说明没有触发3次PV弹注册弹窗，不需要需要刷新页面
+            print('未触发3次PV弹注册弹窗')
+
+        finally:
+            print('继续执行')
+
+
 
         sleep(2)
         self.driver.quit()
+
+
