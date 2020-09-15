@@ -31,11 +31,6 @@ class TestZhLogin:
         self.driver.find_element_by_id('su').click()
         sleep(3)
 
-    def test_001(self):
-        self.driver.find_element_by_id('kw').send_keys("python")
-        self.driver.find_element_by_id('su').click()
-        sleep(3)
-
 
     def teardown_class(self):
 
