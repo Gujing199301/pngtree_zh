@@ -27,6 +27,8 @@ class TestZhLogin:
 
     # facebook登录
     def test_zh_facebook(self):
+        self.driver.refresh()
+        sleep(10)
         # 点击导航登录按钮
         self.driver.find_element_by_xpath('//*[@id="v2-head"]/div/div[1]/div[4]/a[1]').click()
         sleep(2)
